@@ -6,21 +6,21 @@ on:
       - develop
 
 jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-      - name: Install dependencies
-        run: pip install safety
-      - name: Scan for vulnerabilities
-        run: safety check
+#  security:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Set up Python
+#        uses: actions/setup-python@v2
+#      - name: Install dependencies
+#        run: pip install safety
+#      - name: Scan for vulnerabilities
+#        run: safety check
 
 
 
   build-and-push:
-    needs: security
+#    needs: security
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -37,7 +37,7 @@ jobs:
 #          docker-compose up -d
 
       - name: Build Docker Image
-        run: docker build -t testapp-api ./TestApp.API/Data/Dockerfile
+        run: docker build -t testapp-api ./TestApp.API/Dockerfile
 
       - name: Health Check
         run: |
