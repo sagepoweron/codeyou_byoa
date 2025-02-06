@@ -1,0 +1,57 @@
+name: dockercompose11280994612631526330
+services:
+  test_server:
+    build:
+      context: C:\Users\Power\Documents\Class\AWS\codeyou_testapp
+      dockerfile: TestApp.API/Data/Dockerfile
+    container_name: test_server
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 1433
+        published: "1433"
+        protocol: tcp
+    restart: unless-stopped
+  testapp.api:
+    build:
+      context: C:\Users\Power\Documents\Class\AWS\codeyou_testapp
+      dockerfile: TestApp.API/Dockerfile
+    container_name: test_api
+    depends_on:
+      test_server:
+        condition: service_started
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "5000"
+        protocol: tcp
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\Power\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\Power\AppData\Roaming/ASP.NET/Https
+        target: /home/app/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose11280994612631526330_default
