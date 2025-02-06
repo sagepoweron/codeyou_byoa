@@ -15,9 +15,7 @@ jobs:
       - name: Install dependencies
         run: pip install safety
       - name: Scan for vulnerabilities
-        run: safety scan
-
-
+        run: safety check
 
 #  build-and-push:
 #    needs: security
