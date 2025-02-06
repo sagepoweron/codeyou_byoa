@@ -34,18 +34,21 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push
+      - name: Build and push database
+        uses: docker/build-push-action@v6
+        with:
+          file: ./TestApp.API/Data/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/testapp-db:develop
+
+      - name: Build and push api
         uses: docker/build-push-action@v6
         with:
           file: ./TestApp.API/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/testapp:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/testapp-api:develop
 
 
-
-
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v2
 
 #      - name: Build Docker Image
 #        run: docker build -t testapp-db:develop ./TestApp.API/Data/Dockerfile
@@ -62,9 +65,6 @@ jobs:
 
 #      - name: Build docker image
 #        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/testapp-api:develop -f TestApp.API/Dockerfile testapp-api/
-
-#      - name: Login to Docker Hub
-#        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
 #      - name: Docker push image
 #        run: docker push ${{ secrets.DOCKER_USERNAME }}/testapp-api:develop
