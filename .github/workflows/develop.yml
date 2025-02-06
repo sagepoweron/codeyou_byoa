@@ -36,11 +36,8 @@ jobs:
 #          docker-compose build
 #          docker-compose up -d
 
-      - name: Build Docker Image API
-        run: docker build -t testapp-api ./TestApp.API
-
-#      - name: Build Docker Image DB
-#        run: docker build -t testapp-db ./TestApp.API/Data
+      - name: Build Docker Image
+        run: docker build -t testapp-api ./TestApp.API/Data/Dockerfile
 
       - name: Health Check
         run: |
@@ -82,11 +79,7 @@ jobs:
 
 
 
-#      - name: Build Docker Image
-#        run: docker build -t testapp-db:develop ./TestApp.API/Data/Dockerfile
 
-#      - name: Build docker image
-#        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/testapp-db:develop -f TestApp.API/Data/Dockerfile testapp-db/
 
 #      - name: Login to Docker Hub
 #        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
